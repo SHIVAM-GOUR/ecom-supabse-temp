@@ -18,11 +18,19 @@ export default function Page() {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await supabase.from('notes').select()
+      const { data } = await supabase.from('car').select('id, name').order('id', {ascending: true})
       setNotes(data)
     }
     getData()
   }, [])
 
-  return <pre>{JSON.stringify(notes, null, 2)}</pre>
+  const updateCar = async () => {
+    await supabase.from("car").update({ name: "Riya's defender ❤️" }).eq('id', 1).select();
+  }
+
+  return <div>
+    <h1>Update</h1>
+    <button className='bg-purple-400 p-2 rounded-sm shadow-sm' onClick={() => updateCar()}>Update Car name</button>
+    <pre>{JSON.stringify(notes, null, 2)}</pre>
+  </div>
 }
