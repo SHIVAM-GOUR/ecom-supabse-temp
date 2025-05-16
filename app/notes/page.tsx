@@ -32,7 +32,7 @@ export default function Page() {
   }
 
   return <div className='flex flex-col'>
-    <h1>Update</h1>
+    <h1>Update car name</h1>
  <input
         type="text"
         placeholder="Enter new car name"
