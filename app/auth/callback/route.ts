@@ -22,3 +22,10 @@ export async function GET(request: Request) {
   // URL to redirect to after sign up process completes
   return NextResponse.redirect(`${origin}/protected`);
 }
+
+
+// what does this function does
+// 1. Supabase redirects here after login	/auth/callback?code=...
+// 2. This handler exchanges the code	supabase.auth.exchangeCodeForSession(code)
+// 3. Sets the session cookie	(via Supabase SSR client)
+// 4. Redirects the user	Either to redirect_to or /protected

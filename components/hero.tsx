@@ -3,6 +3,14 @@ import SupabaseLogo from "./supabase-logo";
 
 export default function Header() {
   return (
+    <DefaultHeroSection />
+  );
+}
+
+
+// other code 
+const DefaultHeroSection = () => {
+  return (
     <div className="flex flex-col gap-16 items-center">
       <div className="flex gap-8 justify-center items-center">
         <a
@@ -40,5 +48,5 @@ export default function Header() {
       </p>
       <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
     </div>
-  );
+  )
 }
