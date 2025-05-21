@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 // update business info api
