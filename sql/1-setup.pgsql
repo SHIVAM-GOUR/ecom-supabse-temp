@@ -26,8 +26,9 @@ CREATE TABLE IF NOT EXISTS product(
     description_primary text,
     description_secondary text,
     price bigint,
-    is_visible boolean NOT NULL DEFAULT TRUE,
-    category smallint NOT NULL REFERENCES product_category(id),
+    is_visible boolean DEFAULT TRUE,
+    category_id smallint NOT NULL REFERENCES product_category(id),
+    business_id smallint NOT NULL REFERENCES business_info(id),
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     updated_at timestamp with time zone NOT NULL DEFAULT now()
 );
@@ -49,3 +50,4 @@ CREATE TABLE IF NOT EXISTS inquiry(
     created_at timestamp with time zone NOT NULL DEFAULT now(),
     updated_at timestamp with time zone NOT NULL DEFAULT now()
 );
+
