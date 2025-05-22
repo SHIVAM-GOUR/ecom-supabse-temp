@@ -1,81 +1,83 @@
 'use client'
+import { fetchProducts } from '@/functions/product-actions';
+import { uploadFileOnDB } from '@/functions/storage-actions';
+import { Product } from '@/types/global';
 import React, { useEffect, useState } from 'react'
 
 const AdminProducts = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [message, setMessage] = useState<string | null>(null);
+    const [files, setFiles] = useState<FileList | null>(null);
 
+    // fetch products
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const res = await fetch('/api/product');
-                const result = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(result.error || 'Failed to fetch products');
-                }
-
-                setProducts(result.data);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProducts();
+        fetchProducts(setProducts, setError, setLoading);
     }, []);
+
+
+    // upload an image
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        setFiles(files)
+    };
+
+    const upload = async () => {
+        if (!files || files.length === 0) {
+            setError("No files selected");
+            return;
+        }
+        if (files.length > 5) {
+            setError("max files limit reached")
+            return
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i]
+            const filePath = `upload/${Date.now()}-${file.name}`
+
+            const { data, error } = await uploadFileOnDB(filePath, file)
+
+            if (error) {
+                setError("upload file failed")
+            } else {
+                setMessage("file uploaded")
+            }
+        }
+        setMessage(files.length + " files uploaded")
+    }
 
 
     return (
         <div>
-            <h2>Product List</h2>
-            {products.length == 0 && <p>No products</p>}
-            {products.map((product) => (
-                <div key={product.id} style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem' }}>
-                    <h3>Name: {product.name}</h3>
-                    <p>Description: {product.description_primary}</p>
-                    <p>Price: ₹{product.price}</p>
-                </div>
-            ))}
+            <div className='mb-1'>
+                <p>Upload file</p>
+                <input
+                    type="file"
+                    multiple
+                    accept="image/png, image/jpeg"
+                    onChange={handleFileChange} disabled={uploading}
+                />
+                {uploading && <p>Uploading...</p>}
+                <button onClick={() => upload()}>Upload file</button>
+                {message && <p>{message}</p>}
+            </div>
+            <hr />
+
+            <div className='bg-gray-200 p-2'>
+                <h2>Product List</h2>
+                {(products.length == 0 && !loading) && <p>No products</p>}
+                {loading ? <p className='text-red-500'>Loading..</p>
+                    : products.map((product, i) => (
+                        <div key={product.id} className='bg-blue-500 m-1 px-2 rounded-md text-white'>
+                            <h3>{i + 1}. Name: {product.name}</h3>
+                        </div>
+                    ))}
+            </div>
         </div>
     )
 }
 
 export default AdminProducts
-
-interface ProductCategory {
-    id: number;
-    name: string;
-}
-
-interface BusinessInfo {
-    id: number;
-    name: string;
-    tagline: string;
-    about: string;
-    address: string;
-    pincode: string;
-    mobile: string;
-    email: string;
-    color_primary: string;
-    color_secondary: string;
-    logo_link: string;
-    map_link: string;
-    posters: string[];
-    updated_at: string;
-}
-
-interface Product {
-    id: number;
-    name: string;
-    description_primary?: string;
-    description_secondary?: string;
-    price: number;
-    is_visible: boolean;
-    created_at: string;
-    updated_at: string;
-    product_category: ProductCategory;
-    business_info: BusinessInfo;
-}
