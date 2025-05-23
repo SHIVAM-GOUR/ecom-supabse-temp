@@ -33,3 +33,21 @@ export interface Product {
     created_at: string;
     updated_at: string;
 }
+
+export interface InquiryStage {
+    id: number;
+    name: string;
+    description: string;
+}
+
+export interface Inquiry {
+    id: number;
+    name: string;
+    email: string;
+    mobile_number: string;
+    message: string;
+    stage: InquiryStage
+    remark: string[];
+    created_at: string;
+    updated_at: string
+}
