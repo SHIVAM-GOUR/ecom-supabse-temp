@@ -1,5 +1,5 @@
 import { hasEnvVars } from "@/utils/supabase/check-env-vars"
-import { EnvVarWarning } from "./env-var-warning"
+import { EnvVarWarning } from "../../env-var-warning"
 import HeaderAuth from "@/components/header-auth"
 
 export const Navbar = () => {
