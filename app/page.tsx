@@ -1,13 +1,9 @@
-import AboutUs from "@/components/GBT/landingPage/about-us";
-import HeroSection from "@/components/GBT/landingPage/hero-section";
+import { GBTLadingPage } from "@/components/GBT/landingPage/gbt-landing-page";
 
 export default async function Home() {
-
-
   return (
     <>
-      <HeroSection />
-      <AboutUs />
+      <GBTLadingPage />
     </>
   );
 }

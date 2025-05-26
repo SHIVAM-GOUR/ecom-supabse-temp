@@ -11,8 +11,15 @@ export async function PATCH(req: NextRequest) {
             return NextResponse.json({ error: 'Missing "id" in request body' }, { status: 400 });
         }
 
+
+        // Filter out undefined or null values
         const updates = Object.fromEntries(
-            Object.entries(rest).filter(([_, value]) => value !== undefined && value !== null)
+            Object.entries(rest).filter(([key, value]) =>
+                value !== undefined &&
+                value !== null &&
+                key !== 'id' &&
+                key !== 'updated_at'
+            )
         );
 
         updates.updated_at = new Date().toISOString();

@@ -19,12 +19,10 @@ const UpdateBusinessName = () => {
         getData()
     }, [])
 
+    // update business info api call
     const updateName = async () => {
         setStatus('updating...');
-
         try {
-            console.log("key val:", key, value);
-
             const res = await fetch('/api/business', {
                 method: 'PATCH',
                 headers: {
@@ -32,7 +30,7 @@ const UpdateBusinessName = () => {
                 },
                 body: JSON.stringify({
                     id: 1, // example row ID
-                    [key]: value
+                    [key]: value,
                 }),
             });
 
