@@ -1,6 +1,7 @@
 import { hasEnvVars } from "@/utils/supabase/check-env-vars"
 import { EnvVarWarning } from "../../env-var-warning"
 import HeaderAuth from "@/components/header-auth"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 
 export const Navbar = () => {
     return (
@@ -9,7 +10,10 @@ export const Navbar = () => {
                 <div className="flex gap-5 items-center font-semibold">
                     <h1 className="text-2xl">GroowByTech</h1>
                 </div>
-                {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
+                <div className="flex">
+                    <span className="mx-1"><ThemeSwitcher /></span>
+                    {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
+                </div>
             </div>
         </nav>
     )
