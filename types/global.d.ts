@@ -24,8 +24,8 @@ export interface Product {
     id: number;
     name: string;
     images: string[];
-    description_primary?: string;
-    description_secondary?: string;
+    description_primary: string;
+    description_secondary: string;
     price: number;
     is_visible: boolean;
     product_category: ProductCategory;
