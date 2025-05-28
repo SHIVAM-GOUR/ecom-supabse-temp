@@ -74,10 +74,10 @@ const AdminProducts = () => {
                 {(products.length == 0 && !loading) && <p>No products</p>}
                 {loading ? <p className='text-red-500'>Loading..</p>
                     : products.map((product) => (
-                        <div key={product.id} className='bg-blue-500 m-1 px-2 rounded-md text-white'>
+                        <div key={product.id} className='bg-blue-500 m-1 p-2 rounded-md text-white'>
                             <div className='flex justify-between'>
                                 <p>Id: {product.id}</p>
-                                <button className='bg-purple-500 p-1' onClick={() => updateProduct(
+                                <button className='bg-purple-700 p-1 m-2 rounded-sm' onClick={() => updateProduct(
                                     product.id,
                                     product.name,
                                     product.description_primary,
@@ -88,7 +88,9 @@ const AdminProducts = () => {
                             </div>
                             <p>Name: {product.name}</p>
                             <p>Description: {product.description_primary}</p>
+                            <p>Description: {product.description_secondary}</p>
                             <p>Category: {product.product_category.name}</p>
+                            <p>Price: {product.price}</p>
                         </div>
                     ))}
             </div>
