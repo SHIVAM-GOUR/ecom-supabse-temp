@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { Navbar } from "@/components/GBT/landingPage/navbar";
 import { Footer } from "@/components/GBT/landingPage/footer";
+import StoreProvider from "@/redux/Providers";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -36,11 +37,13 @@ export default function RootLayout({
         >
           <main className="min-h-screen">
             <div>
+                <StoreProvider>
               <Navbar />
               <div>
                 {children}
               </div>
               {/* <Footer /> */}
+              </StoreProvider>
             </div>
           </main>
         </ThemeProvider>
